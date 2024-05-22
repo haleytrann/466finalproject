@@ -1,7 +1,5 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Final {
 
@@ -26,6 +24,20 @@ public class Final {
         } catch (FileNotFoundException e) { // catch file not found exception
             e.printStackTrace();
         }
+
+        // print out parsed data
+//        for (int i = 0; i < data.size(); i++) {
+//            double[] array = data.get(i);
+//            System.out.print("Array " + i + ": ");
+//            for (int j = 0; j < array.length; j++) {
+//                System.out.print(array[j] + " ");
+//            }
+//            System.out.println();
+//
+//        }
+
+        ArrayList<double[]> features = prepareFeatures(data);
+        ArrayList<int[]> targets = prepareTargets(data);
     }
 
     public static void parseData(File file) throws FileNotFoundException {
@@ -39,5 +51,31 @@ public class Final {
             }
             data.add(values);
         }
+    }
+
+    // create input nodes (features) to put into neural network
+    public static ArrayList<double[]> prepareFeatures(ArrayList<double[]> data) {
+        ArrayList<double[]> features = new ArrayList<>();
+
+        for (double[] entry : data) {
+            double[] feature = new double[57]; // can adjust which nodes if we want different feature selection in the future
+            System.arraycopy(entry, 0, feature, 0, 57);
+            features.add(feature);
+        }
+
+        return features;
+    }
+
+    // create output nodes (targets)
+    public static ArrayList<int[]> prepareTargets(ArrayList<double[]> data) {
+        ArrayList<int[]> targets = new ArrayList<>();
+
+        for (double[] entry : data) {
+            int[] target = new int[1];
+            target[0] = (int) entry[57];
+            targets.add(target);
+        }
+
+        return targets;
     }
 }
