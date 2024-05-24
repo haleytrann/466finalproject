@@ -20,6 +20,8 @@ public class Final {
 
         try {
             parseData(file); // parse data into arrays
+            NeuralNetwork nn = new NeuralNetwork(1, new int[]{5});
+            // creates neural network with one hidden layer of size 58
 
         } catch (FileNotFoundException e) { // catch file not found exception
             e.printStackTrace();
