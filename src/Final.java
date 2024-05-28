@@ -3,7 +3,11 @@ import java.util.*;
 
 public class Final {
 
-    public static int NUM_FEATURES = 58;
+    public static int NUM_VARS = 58;
+    public static int NUM_FEATURES = 57;
+    public static int NUM_TARGETS = 1;
+
+
     static ArrayList<double[]> data = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -47,8 +51,8 @@ public class Final {
         int rowCount = 0;
         while(input.hasNextLine()) {
             String[] line = input.nextLine().split(",");
-            double values[] = new double[NUM_FEATURES];
-            for(int i = 0; i < NUM_FEATURES; i++) {
+            double values[] = new double[NUM_VARS];
+            for(int i = 0; i < NUM_VARS; i++) {
                 values[i] = Double.parseDouble(line[i]);
             }
             data.add(values);
@@ -60,7 +64,7 @@ public class Final {
         ArrayList<double[]> features = new ArrayList<>();
 
         for (double[] entry : data) {
-            double[] feature = new double[57]; // can adjust which nodes if we want different feature selection in the future
+            double[] feature = new double[NUM_FEATURES]; // can adjust which nodes if we want different feature selection in the future
             System.arraycopy(entry, 0, feature, 0, 57);
             features.add(feature);
         }
@@ -73,8 +77,8 @@ public class Final {
         ArrayList<int[]> targets = new ArrayList<>();
 
         for (double[] entry : data) {
-            int[] target = new int[1];
-            target[0] = (int) entry[57];
+            int[] target = new int[NUM_TARGETS];
+            target[0] = (int) entry[NUM_FEATURES];
             targets.add(target);
         }
 
