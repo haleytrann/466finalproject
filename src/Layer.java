@@ -23,4 +23,11 @@ public class Layer {
         return networkLayer.size();
     }
 
+    // getter for neurons / networkLayer (same thing)
+    public ArrayList<Neuron> getNetworkLayer() {
+        return networkLayer;
+    }
+
+    // also will add feedForward method that passes in neurons to get actualOutput?
+
 }
