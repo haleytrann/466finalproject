@@ -4,6 +4,7 @@ public class Neuron {
     Random random = new Random();
     public double bias = random.nextDouble(-1, 1);
     public double [] weights = new double[58];
+    private double delta;
     public Neuron() {
         for (int i = 0; i < weights.length; i++) {
             weights[i] = random.nextDouble(-1, 1);
@@ -16,4 +17,30 @@ public class Neuron {
         }
         return (1/(1 + Math.exp(-(initOutput + bias))));
     }
+
+    // getters & setters
+    public double[] getWeights() {
+        return weights;
+    }
+
+    public double getBias() {
+        return bias;
+    }
+
+    public double getDelta() {
+       return delta;
+    }
+
+    public void setDelta(double delta) {
+        this.delta = delta;
+    }
+
+    // sigmoid / sigmoid derivative? (for individual)
+    private double sigmoid(double x) {
+        return 1.0 / (1.0 + Math.exp(-x));
+    }
+
+
+
+
 }
