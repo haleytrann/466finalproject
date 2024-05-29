@@ -24,8 +24,10 @@ public class Final {
 
         try {
             parseData(file); // parse data into arrays
-            NeuralNetwork nn = new NeuralNetwork(1, new int[]{5});
-            // creates neural network with one hidden layer of size 58
+            // test neural network:
+            NeuralNetwork nn1 = new NeuralNetwork(1, new int[]{5});
+            // probably closer to what we want (hidden layer of size n, then a second smaller layer):
+            NeuralNetwork nn2 = new NeuralNetwork(2, new int[]{57, 8});
 
         } catch (FileNotFoundException e) { // catch file not found exception
             e.printStackTrace();
