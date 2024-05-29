@@ -29,6 +29,12 @@ public class Final {
             // probably closer to what we want (hidden layer of size n, then a second smaller layer):
             NeuralNetwork nn2 = new NeuralNetwork(2, new int[]{57, 8});
 
+            ArrayList<double[]> features = prepareFeatures(data);
+
+            nn1.computeOneEpoch(features.get(0)); // just a test with the small example NN
+
+            ArrayList<int[]> targets = prepareTargets(data);
+
         } catch (FileNotFoundException e) { // catch file not found exception
             e.printStackTrace();
         }
@@ -43,9 +49,6 @@ public class Final {
 //            System.out.println();
 //
 //        }
-
-        ArrayList<double[]> features = prepareFeatures(data);
-        ArrayList<int[]> targets = prepareTargets(data);
     }
 
     public static void parseData(File file) throws FileNotFoundException {

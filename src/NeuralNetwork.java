@@ -19,4 +19,18 @@ public class NeuralNetwork {
             neurons[i] = new Layer(neuronCount);
         }
     }
+
+    public double[] computeOneEpoch (double[] inputs) {
+        double[] outputs = null;
+        Layer currentLayer;
+        for(int i = 0; i < layerCount; i++) { // loop through layers
+            currentLayer = neurons[i];
+            outputs = new double[currentLayer.getNumberOfNeurons()]; // create output array for all neurons in the layer
+            for(int j = 0; j < currentLayer.getNumberOfNeurons(); j++) { // loop through and compute each neuron
+                outputs[j] = currentLayer.getNeuron(j).compute(inputs);
+            }
+            inputs = outputs;
+        }
+        return outputs;
+    }
 }
