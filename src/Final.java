@@ -24,16 +24,15 @@ public class Final {
 
         try {
             parseData(file); // parse data into arrays
-            // test neural network:
-            NeuralNetwork nn1 = new NeuralNetwork(1, new int[]{5});
+
             // probably closer to what we want (hidden layer of size n, then a second smaller layer):
-            NeuralNetwork nn2 = new NeuralNetwork(3, new int[]{57, 8, 1});
+            NeuralNetwork nn = new NeuralNetwork(3, new int[]{57, 8, 1});
 
             ArrayList<double[]> features = prepareFeatures(data);
             ArrayList<int[]> targets = prepareTargets(data); // Arraylist of arrays of size 1 containing correct answers
 
             for(int i = 0; i < features.size(); i++) {
-                double[] outputs = nn1.computeOneEpoch(features.get(i)); // just a test with the small example NN
+                double[] outputs = nn.computeOneEpoch(features.get(i)); // just a test with the small example NN
                 String result = "Yes";
                 int actualAnswer = targets.get(i)[0];
                 if (outputs[0] < 0.5) result = "No"; // only one output neuron -> only one value in array
