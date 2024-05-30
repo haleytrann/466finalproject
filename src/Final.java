@@ -30,10 +30,16 @@ public class Final {
             NeuralNetwork nn2 = new NeuralNetwork(3, new int[]{57, 8, 1});
 
             ArrayList<double[]> features = prepareFeatures(data);
+            ArrayList<int[]> targets = prepareTargets(data); // Arraylist of arrays of size 1 containing correct answers
 
-            nn1.computeOneEpoch(features.get(0)); // just a test with the small example NN
-
-            ArrayList<int[]> targets = prepareTargets(data);
+            for(int i; i < features.size(); i++) {
+                double[] outputs = nn1.computeOneEpoch(features.get(i)); // just a test with the small example NN
+                String result = "Yes";
+                int actualAnswer = targets.get(i)[0];
+                if (outputs[0] < 0.5) result = "No"; // only one output neuron -> only one value in array
+                System.out.println("Output value: " + outputs[0]);
+                System.out.println("Is Spam?: " + result);
+            }
 
         } catch (FileNotFoundException e) { // catch file not found exception
             e.printStackTrace();
