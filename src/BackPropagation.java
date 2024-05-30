@@ -14,7 +14,7 @@ public class BackPropagation {
         double[] actualOutputs = nn.computeOneEpoch(inputs); // actual targets (need a feedForward method)
 
         // calc deltas for outer layer
-        Layer outputLayer = layers.getLast();
+        Layer outputLayer = layers.get(layers.size() - 1); // sorry my computer doesn't recognize getLast()
         for (int i = 0; i < outputLayer.getNumberOfNeurons(); i++) {
             Neuron neuron = outputLayer.getNeuron(i);
             double error = expectedOutputs[i] - actualOutputs[i];
