@@ -30,4 +30,5 @@ public class Layer {
 
     // also will add feedForward method that passes in neurons to get actualOutput?
 
+
 }
