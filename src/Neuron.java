@@ -40,7 +40,11 @@ public class Neuron {
         return 1.0 / (1.0 + Math.exp(-x));
     }
 
-
+    public void changeInWeight(double error, double[] inputs, double learningRate) {
+        for (int i = 0; i < weights.length; i++) {
+            weights[i] = weights[i] + (error * inputs[i] * learningRate);
+        }
+    }
 
 
 }

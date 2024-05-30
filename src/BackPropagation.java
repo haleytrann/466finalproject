@@ -14,10 +14,11 @@ public class BackPropagation {
         double[] actualOutputs = nn.computeOneEpoch(inputs); // actual targets (need a feedForward method)
 
         // calc deltas for outer layer
-        Layer outputLayer = layers.get(layers.size() - 1);
+        Layer outputLayer = layers.getLast();
         for (int i = 0; i < outputLayer.getNumberOfNeurons(); i++) {
             Neuron neuron = outputLayer.getNeuron(i);
             double error = expectedOutputs[i] - actualOutputs[i];
+            neuron.changeInWeight(error, inputs, learningRate);
             // neuron.setDelta(error * neuron.compute(inputs)); // need a setter in Neuron class for delta, derivative of sigmoid func
         }
 
