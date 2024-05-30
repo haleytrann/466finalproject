@@ -32,7 +32,7 @@ public class Final {
             ArrayList<double[]> features = prepareFeatures(data);
             ArrayList<int[]> targets = prepareTargets(data); // Arraylist of arrays of size 1 containing correct answers
 
-            for(int i; i < features.size(); i++) {
+            for(int i = 0; i < features.size(); i++) {
                 double[] outputs = nn1.computeOneEpoch(features.get(i)); // just a test with the small example NN
                 String result = "Yes";
                 int actualAnswer = targets.get(i)[0];
