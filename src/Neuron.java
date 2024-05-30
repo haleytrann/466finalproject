@@ -40,6 +40,10 @@ public class Neuron {
         return 1.0 / (1.0 + Math.exp(-x));
     }
 
+    private Double sigmoidDerivative(Double x){
+        return sigmoid(x) * (1 - sigmoid(x));
+    }
+
 
 
 

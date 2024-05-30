@@ -18,7 +18,7 @@ public class BackPropagation {
         for (int i = 0; i < outputLayer.getNumberOfNeurons(); i++) {
             Neuron neuron = outputLayer.getNeuron(i);
             double error = expectedOutputs[i] - actualOutputs[i];
-            // neuron.setDelta(error * neuron.compute(inputs)); // need a setter in Neuron class for delta, derivative of sigmoid func
+            neuron.setDelta(error * neuron.sigmoidDerivative()); // need a setter in Neuron class for delta, derivative of sigmoid func
         }
 
         // calc deltas for hidden layers
@@ -28,10 +28,10 @@ public class BackPropagation {
             for (int j = 0; j < currLayer.getNumberOfNeurons(); j++) {
                 Neuron neuron = currLayer.getNeuron(j);
                 double error = 0.0;
-//                for (Neuron nextNeuron : nextLayer.getNeurons()) {
-//                    error += nextNeuron.getWeights()[j] * nextNeuron.getDelta();
-//                }
-//                neuron.setDelta(error * neuron.deriv());
+                for (Neuron nextNeuron : nextLayer.getNetworkLayer()) {
+                    error += nextNeuron.getWeights()[j] * nextNeuron.getDelta();
+                }
+                neuron.setDelta(error * neuron.sigmoidDerivative());
             }
         }
 
