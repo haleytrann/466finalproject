@@ -33,4 +33,12 @@ public class NeuralNetwork {
         }
         return outputs;
     }
+
+    public double returnOutputNeuron (int index, double[] neurons) {
+        if (index < 0 || index >= neurons.length) {
+            throw new IllegalArgumentException("Neuron index out of bounds");
+        }
+        double[] outputs = computeOneEpoch(neurons);
+        return outputs[index];
+    }
 }

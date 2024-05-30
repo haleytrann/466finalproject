@@ -52,4 +52,7 @@ public class BackPropagation {
 
 
     // train method ?
+    public void train(ArrayList<double[]> data, ArrayList<Double> answers) {
+
+    }
 }
