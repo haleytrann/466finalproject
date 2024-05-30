@@ -31,14 +31,24 @@ public class Final {
             ArrayList<double[]> features = prepareFeatures(data);
             ArrayList<int[]> targets = prepareTargets(data); // Arraylist of arrays of size 1 containing correct answers
 
-            for(int i = 0; i < features.size(); i++) {
+            int correct = 0;
+            for (int i = 0; i < features.size(); i++) {
                 double[] outputs = nn.computeOneEpoch(features.get(i)); // just a test with the small example NN
                 String result = "Yes";
                 int actualAnswer = targets.get(i)[0];
                 if (outputs[0] < 0.5) result = "No"; // only one output neuron -> only one value in array
+                int predictedAnswer = (outputs[0] >= 0.5) ? 1 : 0;
                 System.out.println("Output value: " + outputs[0]);
                 System.out.println("Is Spam?: " + result);
+                System.out.println("Actual Answer: " + (actualAnswer == 1 ? "Yes" : "No"));
+
+                if (actualAnswer == predictedAnswer) {
+                    correct ++;
+                }
             }
+
+            double accuracy = (double) correct / features.size();
+            System.out.println(accuracy); // around .39 or .4 (for one epoch)
 
         } catch (FileNotFoundException e) { // catch file not found exception
             e.printStackTrace();
