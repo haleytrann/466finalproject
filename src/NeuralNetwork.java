@@ -20,6 +20,7 @@ public class NeuralNetwork {
         }
     }
 
+    // pass in inputs into neural network to get actual outputs
     public double[] computeOneEpoch (double[] inputs) {
         double[] outputs = null;
         Layer currentLayer;
