@@ -16,7 +16,9 @@ public class NeuralNetwork {
         }
         for(int i = 0; i < layerCount; i++) {
             int neuronCount = neuronCountByLayer[i];
-            neurons[i] = new Layer(neuronCount);
+            int prevCount = 57;
+            if(i > 0) prevCount = neuronCountByLayer[i-1]; // neuron accepts inputs from all prev neurons
+            neurons[i] = new Layer(neuronCount, prevCount);
         }
     }
 

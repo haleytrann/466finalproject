@@ -3,12 +3,17 @@ import java.util.*;
 public class Neuron {
     Random random = new Random();
     public double bias = random.nextDouble(-1, 1);
-    public double [] weights = new double[58];
+    public double [] weights;
+    private double numInputs;
     private double delta;
-    public Neuron() {
-        for (int i = 0; i < weights.length; i++) {
+
+
+    public Neuron(int numInputs) {
+        weights = new double[numInputs];
+        for (int i = 0; i < numInputs; i++) {
             weights[i] = random.nextDouble(-1, 1);
         }
+        this.numInputs = numInputs;
     }
     public double compute(double [] inputs) {
         double initOutput = 0;

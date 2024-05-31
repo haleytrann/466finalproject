@@ -17,6 +17,7 @@ public class BackPropagation {
         Layer outputLayer = layers.get(layers.size() - 1); // sorry my computer doesn't recognize getLast()
         for (int i = 0; i < outputLayer.getNumberOfNeurons(); i++) {
             Neuron neuron = outputLayer.getNeuron(i);
+            // NOTE: error for neurons other
             double error = expectedOutputs[i] - actualOutputs[i];
             neuron.changeInWeight(error, inputs, learningRate);
             // neuron.setDelta(error * neuron.compute(inputs)); // need a setter in Neuron class for delta, derivative of sigmoid func

@@ -4,9 +4,9 @@ public class Layer {
 
     private ArrayList<Neuron> networkLayer = new ArrayList<>();
 
-    public Layer(int numberOfNeurons){
+    public Layer(int numberOfNeurons, int numberOfInputsPerNeuron){
         for (int i = 0; i < numberOfNeurons; i++) {
-            networkLayer.add(new Neuron());
+            networkLayer.add(new Neuron(numberOfInputsPerNeuron));
         }
     }
 
