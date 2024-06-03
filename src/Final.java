@@ -6,6 +6,8 @@ public class Final {
     public static int NUM_VARS = 58;
     public static int NUM_FEATURES = 57;
     public static int NUM_TARGETS = 1;
+    public static double LEARN_RATE = 0.1; // common rates to try: 0.1, 0.01, 0.001
+    public static int EPOCHS = 50; // maybe test with 50, 75, 100
 
 
     static ArrayList<double[]> data = new ArrayList<>();
@@ -29,21 +31,29 @@ public class Final {
             NeuralNetwork nn = new NeuralNetwork(3, new int[]{57, 8, 1});
 
             ArrayList<double[]> features = prepareFeatures(data);
-            ArrayList<int[]> targets = prepareTargets(data); // Arraylist of arrays of size 1 containing correct answers
+            ArrayList<double[]> targets = prepareTargets(data); // Arraylist of arrays of size 1 containing correct answers
 
             int correct = 0;
-            for (int i = 0; i < features.size(); i++) {
-                double[] outputs = nn.computeOneEpoch(features.get(i)); // just a test with the small example NN
-                String result = "Yes";
-                int actualAnswer = targets.get(i)[0];
-                if (outputs[0] < 0.5) result = "No"; // only one output neuron -> only one value in array
-                int predictedAnswer = (outputs[0] >= 0.5) ? 1 : 0;
-                System.out.println("Output value: " + outputs[0]);
-                System.out.println("Is Spam?: " + result);
-                System.out.println("Actual Answer: " + (actualAnswer == 1 ? "Yes" : "No"));
+            for(int epoch = 0; epoch < EPOCHS; epoch++) {
+                for (int i = 0; i < features.size(); i++) { // looping through each row of data (SGD)
 
-                if (actualAnswer == predictedAnswer) {
-                    correct ++;
+                    double[] outputs = nn.computeOneIteration(features.get(i)); // just a test with the small example NN
+                    String result = "Yes";
+                    double actualAnswer = targets.get(i)[0];
+
+                    int predictedAnswer = (outputs[0] >= 0.5) ? 1 : 0;
+                    if(epoch == 0) { // for now, only printing first result to avoid printing junk
+                        if (outputs[0] < 0.5) result = "No"; // only one output neuron -> only one value in array
+                        System.out.println("Output value: " + outputs[0]);
+                        System.out.println("Is Spam?: " + result);
+                        System.out.println("Actual Answer: " + (actualAnswer == 1 ? "Yes" : "No"));
+                    }
+
+                    if (actualAnswer == predictedAnswer) {
+                        correct++;
+                    }
+
+                    nn.backPropagate(features.get(i), targets.get(i), outputs, LEARN_RATE);
                 }
             }
 
@@ -93,11 +103,11 @@ public class Final {
     }
 
     // create output nodes (targets)
-    public static ArrayList<int[]> prepareTargets(ArrayList<double[]> data) {
-        ArrayList<int[]> targets = new ArrayList<>();
+    public static ArrayList<double[]> prepareTargets(ArrayList<double[]> data) {
+        ArrayList<double[]> targets = new ArrayList<>();
 
         for (double[] entry : data) {
-            int[] target = new int[NUM_TARGETS];
+            double[] target = new double[NUM_TARGETS];
             target[0] = (int) entry[NUM_FEATURES];
             targets.add(target);
         }

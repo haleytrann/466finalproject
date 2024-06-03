@@ -24,7 +24,7 @@ public class Layer {
     }
 
     // getter for neurons / networkLayer (same thing)
-    public ArrayList<Neuron> getNetworkLayer() {
+    public ArrayList<Neuron> getNeurons() {
         return networkLayer;
     }
 

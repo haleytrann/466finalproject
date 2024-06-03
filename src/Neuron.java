@@ -6,6 +6,7 @@ public class Neuron {
     public double [] weights;
     private double numInputs;
     private double delta;
+    private double activation; // most recent output of neuron
 
 
     public Neuron(int numInputs) {
@@ -20,7 +21,8 @@ public class Neuron {
         for (int i = 0; i < inputs.length; i++) {
             initOutput += (inputs[i] * weights[i]);
         }
-        return (1/(1 + Math.exp(-(initOutput + bias))));
+        activation = (1/(1 + Math.exp(-(initOutput + bias))));
+        return activation;
     }
 
     // getters & setters
@@ -45,9 +47,17 @@ public class Neuron {
         return 1.0 / (1.0 + Math.exp(-x));
     }
 
-    public void changeInWeight(double error, double[] inputs, double learningRate) {
+    public void changeOutputNeuronWeight(double error, double[] inputs, double learningRate) {
         for (int i = 0; i < weights.length; i++) {
-            weights[i] = weights[i] + (error * inputs[i] * learningRate);
+            delta = (error * inputs[i] * learningRate); // confirm correctness
+            weights[i] = weights[i] - delta; // fact check: add or subtract delta?
+        }
+    }
+
+    public void changeHiddenNeuronWeight(double[] connectingNeuronErrors, double learningRate) {
+        for (int i = 0; i < weights.length; i++) {
+            delta = (connectingNeuronErrors[i] * activation * learningRate); // confirm correctness
+            weights[i] = weights[i] - delta; // fact check: add or subtract delta?
         }
     }
 

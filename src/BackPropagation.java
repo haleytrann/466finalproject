@@ -7,11 +7,12 @@ public class BackPropagation {
 
     private ArrayList<Layer> layers;
 
-    public void backpropagate(double[] inputs, double[] expectedOutputs, double learningRate) {
+    // MOVED TO NEURAL NETWORK CLASS, UPDATED VERSION IS THERE
+    public void backPropagate(double[] inputs, double[] expectedOutputs, double learningRate) {
 
         int[] neuronCountByLayer = {64, 8};
         NeuralNetwork nn = new NeuralNetwork(2, neuronCountByLayer); // adjust & change later / move computeOneEpoch into this class instead?
-        double[] actualOutputs = nn.computeOneEpoch(inputs); // actual targets (need a feedForward method)
+        double[] actualOutputs = nn.computeOneIteration(inputs); // actual targets (need a feedForward method)
 
         // calc deltas for outer layer
         Layer outputLayer = layers.get(layers.size() - 1); // sorry my computer doesn't recognize getLast()
@@ -19,7 +20,7 @@ public class BackPropagation {
             Neuron neuron = outputLayer.getNeuron(i);
             // NOTE: error for neurons other
             double error = expectedOutputs[i] - actualOutputs[i];
-            neuron.changeInWeight(error, inputs, learningRate);
+            neuron.changeOutputNeuronWeight(error, inputs, learningRate);
             // neuron.setDelta(error * neuron.compute(inputs)); // need a setter in Neuron class for delta, derivative of sigmoid func
         }
 
