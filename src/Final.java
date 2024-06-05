@@ -7,7 +7,9 @@ public class Final {
     public static int NUM_FEATURES = 57;
     public static int NUM_TARGETS = 1;
     public static double LEARN_RATE = 0.1; // common rates to try: 0.1, 0.01, 0.001
-    public static int EPOCHS = 50; // maybe test with 50, 75, 100
+    public static int EPOCHS = 50; // maybe test with 50, 75, 100, # of times we iterate through the data
+    public static int NUM_ROWS = 4601;
+    public static int TESTING_SIZE = 900;
 
 
     static ArrayList<double[]> data = new ArrayList<>();
@@ -30,10 +32,43 @@ public class Final {
             // probably closer to what we want (hidden layer of size n, then a second smaller layer):
             NeuralNetwork nn = new NeuralNetwork(3, new int[]{57, 8, 1});
 
+
             ArrayList<double[]> features = prepareFeatures(data);
             ArrayList<double[]> targets = prepareTargets(data); // Arraylist of arrays of size 1 containing correct answers
 
             int correct = 0;
+            int falsePos = 0;
+            int falseNeg = 0;
+
+            Random random = new Random();
+            ArrayList<Integer> testing = new ArrayList<>();
+            int randomNum1 = random.nextInt(1, 10);
+            testing.add(randomNum1);
+
+            for (int i = 0; i < features.size(); i++) {
+                int randomNum2 = random.nextInt(1, 10);
+                if (!testing.contains(randomNum2)){
+                    testing.add(randomNum2);
+                }
+                if (testing.size() == 4) {
+                    break;
+                }
+            }
+            ArrayList<Integer> full = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                full.add(i);
+            }
+
+            ArrayList<Integer> training;
+            for (int index : testing) {
+                full.remove(Integer.valueOf(index));
+            }
+            training = full;
+
+
+            System.out.println(training);
+            System.out.println(testing);
+
             for(int epoch = 0; epoch < EPOCHS; epoch++) {
                 for (int i = 0; i < features.size(); i++) { // looping through each row of data (SGD)
 
@@ -52,13 +87,42 @@ public class Final {
                     if (actualAnswer == predictedAnswer) {
                         correct++;
                     }
+                    else if (predictedAnswer == 0 && actualAnswer == 1){
+                        falseNeg++;
+                    } else if (predictedAnswer == 1 && actualAnswer == 0) {
+                        falsePos++;
+                    }
 
                     nn.backPropagate(features.get(i), targets.get(i), outputs, LEARN_RATE);
                 }
             }
 
+            //testing nn2
+//            NeuralNetwork nn2 = new NeuralNetwork(4, new int[]{57, 5});
+//            //testing backpropogation on hiddenLayer to see if it works properly
+//            Layer hiddenLayer = new Layer(5, 57);
+//            for (Neuron neuron : hiddenLayer.getNeurons()) {
+//
+//            }
+//            int correct2 = 0;
+//            for(int epoch = 0; epoch < EPOCHS; epoch++) {
+//                for (int i = 0; i < features.size(); i++) {
+//                    double[] outputs = nn.computeOneIteration(features.get(i));
+//                    nn2.backPropagate(features.get(i), targets.get(i), outputs, LEARN_RATE);
+//
+//                }
+//            }
+
+            System.out.println(correct);
+            //falsePos = correct - falseNeg;
             double accuracy = (double) correct / features.size();
-            System.out.println(accuracy); // around .39 or .4 (for one epoch)
+            System.out.println("Accuracy: " + accuracy); // around .39 or .4 (for one epoch)
+            double precision = (double)  correct / (correct + falsePos);
+            System.out.println("Precision: " + precision);
+            double recall = (double) correct / (correct + falseNeg);
+            System.out.println("Recall: " + recall);
+            double f1Score = (2 * precision * recall) / (precision + recall);
+            System.out.println("F1Score: " + f1Score);
 
         } catch (FileNotFoundException e) { // catch file not found exception
             e.printStackTrace();
