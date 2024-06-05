@@ -68,26 +68,27 @@ public class NeuralNetwork {
                                                 // because each hidden neuron has one error value for each connection so you need a way to combine them
                 }
 
-                // double delta = error * sigmoidDerivative(neuron.getOutput()); // calculate output of neuron?
-                // neuron.changeHiddenNeuronWeight(prevErrors, learningRate);
+                double delta = error * sigmoidDerivative(neuron.getOutput()); // calculate output of neuron?
+                neuron.setDelta(delta);
+                neuron.changeHiddenNeuronWeight(learningRate); // weight update for hidden layers
                 // ^ commented out temporarily
             }
         }
 
         // update weights & biases for all layers
-        double[] layerInputs = inputs;
-        for (Layer layer : layers) {
-            double[] nextInputs = new double[layer.getNumberOfNeurons()];
-            for (int j = 0; j < layer.getNumberOfNeurons(); j++) {
-                Neuron neuron = layer.getNeuron(j);
-                for (int k = 0; k < layerInputs.length; k++) {
-                    neuron.getWeights()[k] += learningRate * neuron.getDelta() * layerInputs[k];
-                }
-//                neuron.setBias(neuron.getBias() + learningRate * neuron.setDelta());
-//                nextInputs[j] = neuron.getOutput();
-            }
-            layerInputs = nextInputs;
-        }
+//        double[] layerInputs = inputs;
+//        for (Layer layer : layers) {
+//            double[] nextInputs = new double[layer.getNumberOfNeurons()];
+//            for (int j = 0; j < layer.getNumberOfNeurons(); j++) {
+//                Neuron neuron = layer.getNeuron(j);
+//                for (int k = 0; k < layerInputs.length; k++) {
+//                    neuron.getWeights()[k] += learningRate * neuron.getDelta() * layerInputs[k];
+//                }
+////                neuron.setBias(neuron.getBias() + learningRate * neuron.setDelta());
+////                nextInputs[j] = neuron.getOutput();
+//            }
+//            layerInputs = nextInputs;
+//        }
     }
 
 

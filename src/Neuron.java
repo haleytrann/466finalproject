@@ -42,6 +42,10 @@ public class Neuron {
         this.delta = delta;
     }
 
+    public double getOutput() { // get compute value
+        return activation;
+    }
+
     // sigmoid / sigmoid derivative? (for individual)
     private double sigmoid(double x) {
         return 1.0 / (1.0 + Math.exp(-x));
@@ -51,7 +55,7 @@ public class Neuron {
 //        return sigmoid(x) * (1 - sigmoid(x));
 //    }
 
-    public double getOutput(double[] inputs) {
+    public double calculateOutput(double[] inputs) {
         double weightedSum = 0;
         for (int i = 0; i < inputs.length; i++) {
             weightedSum += inputs[i] * weights[i];
@@ -69,12 +73,18 @@ public class Neuron {
         }
     }
 
-    public void changeHiddenNeuronWeight(double[] connectingNeuronErrors, double learningRate) {
-        for (int i = 0; i < weights.length; i++) {
-            delta = (connectingNeuronErrors[i] * activation * learningRate); // confirm correctness
-            weights[i] = weights[i] - delta; // fact check: add or subtract delta?
-        }
-    }
+//    public void changeHiddenNeuronWeight(double[] connectingNeuronErrors, double learningRate) {
+//        for (int i = 0; i < weights.length; i++) {
+//            delta = (connectingNeuronErrors[i] * activation * learningRate); // confirm correctness
+//            weights[i] = weights[i] - delta; // fact check: add or subtract delta?
+//        }
+//    }
 
+    public void changeHiddenNeuronWeight(double learningRate) { // new, without prevErrors
+        for (int i = 0; i < weights.length; i++) {
+            weights[i] += learningRate * delta * activation;
+        }
+        bias += learningRate * delta;
+    }
 
 }
