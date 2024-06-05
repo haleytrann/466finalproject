@@ -43,14 +43,15 @@ public class NeuralNetwork {
 
         // calc deltas for outer layer
         Layer outputLayer = layers[layers.length - 1]; // sorry my computer doesn't recognize getLast() :(
-        double prevErrors[] = new double[outputLayer.getNumberOfNeurons()];
+        // double prevErrors[] = new double[outputLayer.getNumberOfNeurons()]; // don't need since calc delta for each neuron based on error
         for (int i = 0; i < outputLayer.getNumberOfNeurons(); i++) {
             Neuron neuron = outputLayer.getNeuron(i);
             // NOTE: error for neurons other
             double error = expectedOutputs[i] - actualOutputs[i];
-            prevErrors[i] = error;
-            neuron.changeOutputNeuronWeight(error, inputs, learningRate);
-            // neuron.setDelta(error * neuron.compute(inputs)); // need a setter in Neuron class for delta, derivative of sigmoid func
+            // prevErrors[i] = error;
+            double delta = error * sigmoidDerivative(actualOutputs[i]);
+            neuron.setDelta(delta);
+            neuron.changeOutputNeuronWeight(error, inputs, learningRate); // weight update for output layer
         }
 
         // calc deltas for hidden layers
@@ -66,6 +67,8 @@ public class NeuralNetwork {
                     error += nextNeuron.getWeights()[j] * nextNeuron.getDelta(); // this is only if the next layer down is also hidden layer
                                                 // because each hidden neuron has one error value for each connection so you need a way to combine them
                 }
+
+                // double delta = error * sigmoidDerivative(neuron.getOutput()); // calculate output of neuron?
                 // neuron.changeHiddenNeuronWeight(prevErrors, learningRate);
                 // ^ commented out temporarily
             }
@@ -94,5 +97,13 @@ public class NeuralNetwork {
         }
         double[] outputs = computeOneIteration(neurons);
         return outputs[index];
+    }
+
+    private double sigmoid(double x) {
+        return 1.0 / (1.0 + Math.exp(-x));
+    }
+
+    private double sigmoidDerivative(double x) {
+        return sigmoid(x) * (1 - sigmoid(x));
     }
 }

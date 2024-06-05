@@ -47,6 +47,21 @@ public class Neuron {
         return 1.0 / (1.0 + Math.exp(-x));
     }
 
+//    private double sigmoidDerivative(double x) {
+//        return sigmoid(x) * (1 - sigmoid(x));
+//    }
+
+    public double getOutput(double[] inputs) {
+        double weightedSum = 0;
+        for (int i = 0; i < inputs.length; i++) {
+            weightedSum += inputs[i] * weights[i];
+        }
+        weightedSum += bias;
+
+        double output = sigmoid(weightedSum); // apply activation function
+        return output;
+    }
+
     public void changeOutputNeuronWeight(double error, double[] inputs, double learningRate) {
         for (int i = 0; i < weights.length; i++) {
             delta = (error * inputs[i] * learningRate); // confirm correctness
