@@ -5,6 +5,7 @@ public class Neuron {
     public double bias = random.nextDouble(-1, 1);
     public double [] weights;
     private double numInputs;
+    private double [] inputs;
     private double delta;
     private double activation; // most recent output of neuron
 
@@ -18,6 +19,7 @@ public class Neuron {
     }
     public double compute(double [] inputs) {
         double initOutput = 0;
+        this.inputs = inputs;
         for (int i = 0; i < inputs.length; i++) {
             initOutput += (inputs[i] * weights[i]);
         }
@@ -66,10 +68,10 @@ public class Neuron {
         return output;
     }
 
-    public void changeOutputNeuronWeight(double error, double[] inputs, double learningRate) {
+    public void changeOutputNeuronWeight(double error, double learningRate) {
         for (int i = 0; i < weights.length; i++) {
-            delta = (error * inputs[i] * learningRate); // confirm correctness
-            weights[i] = weights[i] - delta; // fact check: add or subtract delta?
+            delta = (error * inputs[i]); // multiply by weight?
+            weights[i] = weights[i] - delta * learningRate; // fact check: add or subtract delta?
         }
     }
 

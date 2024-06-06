@@ -51,7 +51,7 @@ public class NeuralNetwork {
             // prevErrors[i] = error;
             double delta = error * sigmoidDerivative(actualOutputs[i]);
             neuron.setDelta(delta);
-            neuron.changeOutputNeuronWeight(error, inputs, learningRate); // weight update for output layer
+            neuron.changeOutputNeuronWeight(error, learningRate); // weight update for output layer
         }
 
         // calc deltas for hidden layers
@@ -64,8 +64,8 @@ public class NeuralNetwork {
                 Neuron neuron = currLayer.getNeuron(j);
                 double error = 0.0;
                 for (Neuron nextNeuron : nextLayer.getNeurons()) {
-                    error += nextNeuron.getWeights()[j] * nextNeuron.getDelta(); // this is only if the next layer down is also hidden layer
-                                                // because each hidden neuron has one error value for each connection so you need a way to combine them
+                    error += nextNeuron.getWeights()[j] * nextNeuron.getDelta();
+
                 }
 
                 double delta = error * sigmoidDerivative(neuron.getOutput()); // calculate output of neuron?

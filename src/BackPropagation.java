@@ -20,7 +20,7 @@ public class BackPropagation {
             Neuron neuron = outputLayer.getNeuron(i);
             // NOTE: error for neurons other
             double error = expectedOutputs[i] - actualOutputs[i];
-            neuron.changeOutputNeuronWeight(error, inputs, learningRate);
+            neuron.changeOutputNeuronWeight(error, learningRate);
             // neuron.setDelta(error * neuron.compute(inputs)); // need a setter in Neuron class for delta, derivative of sigmoid func
         }
 
