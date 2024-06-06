@@ -66,13 +66,13 @@ public class Final {
             training = full;
 
 
-            System.out.println(training);
-            System.out.println(testing);
+            System.out.println("Training indices: " + training);
+            System.out.println("Testing indices: " + testing);
 
             for(int epoch = 0; epoch < EPOCHS; epoch++) {
-                for (int i = 0; i < features.size(); i++) { // looping through each row of data (SGD)
+                for (int i: training) { // looping through each row of data (SGD)
 
-                    double[] outputs = nn.computeOneIteration(features.get(i)); // just a test with the small example NN
+                    double[] outputs = nn.computeOneIteration(features.get(i));
                     String result = "Yes";
                     double actualAnswer = targets.get(i)[0];
 
@@ -82,15 +82,6 @@ public class Final {
                         System.out.println("Output value: " + outputs[0]);
                         System.out.println("Is Spam?: " + result);
                         System.out.println("Actual Answer: " + (actualAnswer == 1 ? "Yes" : "No"));
-                    }
-
-                    if (actualAnswer == predictedAnswer) {
-                        correct++;
-                    }
-                    else if (predictedAnswer == 0 && actualAnswer == 1){
-                        falseNeg++;
-                    } else if (predictedAnswer == 1 && actualAnswer == 0) {
-                        falsePos++;
                     }
 
                     nn.backPropagate(features.get(i), targets.get(i), outputs, LEARN_RATE);
@@ -113,9 +104,29 @@ public class Final {
 //                }
 //            }
 
+            for (int i: testing) { // looping through each row of data (SGD)
+
+                double[] outputs = nn.computeOneIteration(features.get(i));
+                String result = "Yes";
+                double actualAnswer = targets.get(i)[0];
+
+                int predictedAnswer = (outputs[0] >= 0.5) ? 1 : 0;
+
+                if (actualAnswer == predictedAnswer) {
+                    correct++;
+                }
+                else if (predictedAnswer == 0 && actualAnswer == 1){
+                    falseNeg++;
+                } else if (predictedAnswer == 1 && actualAnswer == 0) {
+                    falsePos++;
+                }
+
+                nn.backPropagate(features.get(i), targets.get(i), outputs, LEARN_RATE);
+            }
+
             System.out.println(correct);
             //falsePos = correct - falseNeg;
-            double accuracy = (double) correct / features.size();
+            double accuracy = (double) correct / testing.size();
             System.out.println("Accuracy: " + accuracy); // around .39 or .4 (for one epoch)
             double precision = (double)  correct / (correct + falsePos);
             System.out.println("Precision: " + precision);

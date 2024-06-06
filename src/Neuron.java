@@ -73,6 +73,7 @@ public class Neuron {
             delta = (error * inputs[i]); // multiply by weight?
             weights[i] = weights[i] - delta * learningRate; // fact check: add or subtract delta?
         }
+        bias -= learningRate * error;
     }
 
 //    public void changeHiddenNeuronWeight(double[] connectingNeuronErrors, double learningRate) {
@@ -86,7 +87,7 @@ public class Neuron {
         for (int i = 0; i < weights.length; i++) {
             weights[i] += learningRate * delta * activation;
         }
-        bias += learningRate * delta;
+        bias -= learningRate * delta;
     }
 
 }
