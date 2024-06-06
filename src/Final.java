@@ -76,13 +76,13 @@ public class Final {
                     String result = "Yes";
                     double actualAnswer = targets.get(i)[0];
 
-                    int predictedAnswer = (outputs[0] >= 0.5) ? 1 : 0;
-                    if(epoch == 0) { // for now, only printing first result to avoid printing junk
-                        if (outputs[0] < 0.5) result = "No"; // only one output neuron -> only one value in array
-                        System.out.println("Output value: " + outputs[0]);
-                        System.out.println("Is Spam?: " + result);
-                        System.out.println("Actual Answer: " + (actualAnswer == 1 ? "Yes" : "No"));
-                    }
+//                    int predictedAnswer = (outputs[0] >= 0.5) ? 1 : 0;
+//                    if(epoch == 0) { // for now, only printing first result to avoid printing junk
+//                        if (outputs[0] < 0.5) result = "No"; // only one output neuron -> only one value in array
+//                        System.out.println("Output value: " + outputs[0]);
+//                        System.out.println("Is Spam?: " + result);
+//                        System.out.println("Actual Answer: " + (actualAnswer == 1 ? "Yes" : "No"));
+//                    }
 
                     nn.backPropagate(features.get(i), targets.get(i), outputs, LEARN_RATE);
                 }
