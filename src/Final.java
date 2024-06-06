@@ -42,20 +42,20 @@ public class Final {
 
             Random random = new Random();
             ArrayList<Integer> testing = new ArrayList<>();
-            int randomNum1 = random.nextInt(1, 10);
+            int randomNum1 = random.nextInt(1, NUM_ROWS);
             testing.add(randomNum1);
 
             for (int i = 0; i < features.size(); i++) {
-                int randomNum2 = random.nextInt(1, 10);
+                int randomNum2 = random.nextInt(1, NUM_ROWS);
                 if (!testing.contains(randomNum2)){
                     testing.add(randomNum2);
                 }
-                if (testing.size() == 4) {
+                if (testing.size() == TESTING_SIZE) {
                     break;
                 }
             }
             ArrayList<Integer> full = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < NUM_ROWS; i++) {
                 full.add(i);
             }
 
