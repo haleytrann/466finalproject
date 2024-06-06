@@ -15,7 +15,7 @@ public class HyperparameterTuning {
 
         // grid of hyperparameters
         int[][] hiddenLayerSizesGrid = {{32, 16}, {64, 32}, {128, 64}};
-        double[] learningRateGrid = {0.01, 0.05, 0.1};
+        double[] learningRateGrid = {0.1, 0.01, 0.001};
         int[] epochsGrid = {50, 75, 100};
 
         double bestF1Score = 0;
