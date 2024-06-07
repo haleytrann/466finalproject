@@ -1,0 +1,5 @@
+Here we have a log of all of our completed work:
+Anna - data parsing and normalization, neural network class, some of the back propogation functions, implementation of iterating through rows and epochs, debugging (approx. 8-10 hours)
+Zarina - some of neuron class, helped with updating weights in neural network class, hyperparameter tuning, creating test and training data sets with Haley (approximately 5 hrs)
+Bernette - parsing the features and targets, some of the back propogation, implementing the hyperparameter tuning (5-6 hours total?)
+Haley - created the layer class, created test and training data sets, created function that calculated the weights of the NN, created presentation slides, (roughly 6-7 hours)
